@@ -3,49 +3,49 @@ import {FlatList, View, ImageBackground} from 'react-native';
 import {ListItem} from 'react-native-elements';
 
 const childs = [
-  //   {
-  //     name: 'Aamir',
-  //     image: '../../assets/image.png',
-  //   },
-  //   {
-  //     name: 'Aamir',
-  //     image: '../../assets/image.png',
-  //   },
-  //   {
-  //     name: 'Aamir',
-  //     image: '../../assets/image.png',
-  //   },
-  //   {
-  //     name: 'Aamir',
-  //     image: '../../assets/image.png',
-  //   },
-  //   {
-  //     name: 'Aamir',
-  //     image: '../../assets/image.png',
-  //   },
-  //   {
-  //     name: 'Aamir',
-  //     image: '../../assets/image.png',
-  //   },
-  //   {
-  //     name: 'Aamir',
-  //     image: '../../assets/image.png',
-  //   },
-  //   {
-  //     name: 'Aamir',
-  //     image: '../../assets/image.png',
-  //   },
-  //   {
-  //     name: 'Aamir',
-  //     image: '../../assets/image.png',
-  //   },
-  // {
-  //   name: 'Aamir',
-  //   image: '../../assets/image.png',
-  // },
+  {
+    name: 'Aamir',
+    image: '../../assets/image.png',
+  },
+  {
+    name: 'Aamir',
+    image: '../../assets/image.png',
+  },
+  {
+    name: 'Aamir',
+    image: '../../assets/image.png',
+  },
+  {
+    name: 'Aamir',
+    image: '../../assets/image.png',
+  },
+  {
+    name: 'Aamir',
+    image: '../../assets/image.png',
+  },
+  {
+    name: 'Aamir',
+    image: '../../assets/image.png',
+  },
+  {
+    name: 'Aamir',
+    image: '../../assets/image.png',
+  },
+  {
+    name: 'Aamir',
+    image: '../../assets/image.png',
+  },
+  {
+    name: 'Aamir',
+    image: '../../assets/image.png',
+  },
+  {
+    name: 'Aamir',
+    image: '../../assets/image.png',
+  },
 ];
 
-const Childs = () => {
+const Childs = props => {
   if (childs.length === 0) {
     return (
       <ImageBackground
@@ -65,6 +65,7 @@ const Childs = () => {
               leftAvatar={{source: require('../../assets/image.png')}}
               chevron
               bottomDivider
+              onPress={() => props.navigation.navigate('ChildDetails')}
             />
           );
         }}

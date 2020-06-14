@@ -8,7 +8,7 @@ class Home extends React.Component {
     return (
       <View style={{flex: 1}}>
         <View style={{flex: 1}}>
-          <ChildList />
+          <ChildList {...this.props} />
         </View>
         <View style={{height: 45, flexDirection: 'column-reverse'}}>
           <Button
