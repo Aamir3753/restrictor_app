@@ -5,6 +5,7 @@ import SignIn from './SignIn';
 import Home from './Home';
 import AddChild from './AddChild';
 import ChildDetails from './ChildDetails';
+import SignUp from './SignUp';
 
 const {Screen, Navigator} = createStackNavigator();
 
@@ -27,6 +28,11 @@ const Main = () => {
           name="ChildDetails"
           options={{headerShown: false}}
           component={ChildDetails}
+        />
+        <Screen
+          name="SignUp"
+          options={{headerTitle: 'Create Account'}}
+          component={SignUp}
         />
       </Navigator>
     </NavigationContainer>

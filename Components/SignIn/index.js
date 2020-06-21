@@ -47,7 +47,8 @@ class SignIn extends React.Component {
               size={24}
               type="material-community"
             />
-            <TouchableHighlight>
+            <TouchableHighlight
+              onPress={() => this.props.navigation.navigate('SignUp')}>
               <Text style={{marginRight: 10}}>Create Account!</Text>
             </TouchableHighlight>
           </View>
