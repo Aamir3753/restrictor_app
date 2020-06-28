@@ -1,10 +1,13 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, ScrollView, StyleSheet, ActivityIndicator} from 'react-native';
 import {Input, Button, Icon} from 'react-native-elements';
+import {connect} from 'react-redux';
+import {signUp as signUpActionCreater} from '../../Redux/ActionCreaters/authentication';
 
 class SignUp extends React.Component {
   state = {
-    name: '',
+    firstName: '',
+    lastName: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -15,6 +18,7 @@ class SignUp extends React.Component {
   };
 
   formHandler = () => {
+    const {email, password, firstName, lastName} = this.state;
     // let isValid = true;
     // let errMessage = '';
     // if (this.state.name.length < 4) {
@@ -23,18 +27,39 @@ class SignUp extends React.Component {
     // }else if(this.state.password.length<8){
 
     // }
-    alert(this.state.name);
+    this.props.dispatch(
+      signUpActionCreater({email, password, firstName, lastName}),
+    );
   };
 
   render() {
+    if (this.props.Authentication.isLoading) {
+      return (
+        <ActivityIndicator
+          hidesWhenStopped={true}
+          size="large"
+          style={{
+            flex: 1,
+            alignItems: 'center',
+            backgroundColor: 'transparent',
+          }}
+        />
+      );
+    }
     return (
       <View style={Styles.MainContainer}>
-        <View style={{flex: 1}}>
+        <ScrollView style={{flex: 1}}>
           <Input
             autoFocus={true}
-            onChangeText={text => this.inputHandler('name', text)}
+            onChangeText={text => this.inputHandler('firstName', text)}
             leftIcon={<Icon name="user" type="material-community" />}
-            placeholder="Jhon Doe"
+            placeholder="Aamir"
+          />
+          <Input
+            autoFocus={true}
+            onChangeText={text => this.inputHandler('lastName', text)}
+            leftIcon={<Icon name="user" type="material-community" />}
+            placeholder="Shabir"
           />
           <Input
             onChangeText={text => this.inputHandler('email', text)}
@@ -57,7 +82,7 @@ class SignUp extends React.Component {
             placeholder="Confirm Password"
             textContentType="password"
           />
-        </View>
+        </ScrollView>
         <Button onPress={this.formHandler} title="Let's Go" />
       </View>
     );
@@ -70,4 +95,7 @@ const Styles = StyleSheet.create({
   },
 });
 
-export default SignUp;
+const mapStateToProps = store => ({
+  Authentication: store.Authentication,
+});
+export default connect(mapStateToProps)(SignUp);

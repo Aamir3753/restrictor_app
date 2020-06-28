@@ -1,9 +1,40 @@
 import React from 'react';
-import {StyleSheet, View, TouchableHighlight} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  TouchableHighlight,
+  ActivityIndicator,
+} from 'react-native';
 import {Input, Button, Icon, Text} from 'react-native-elements';
+import {connect} from 'react-redux';
+import {logIn as sigInActionCreater} from '../../Redux/ActionCreaters/authentication';
 
 class SignIn extends React.Component {
+  state = {
+    email: '',
+    password: '',
+  };
+  onTextChangeHandler = (name, value) => {
+    this.setState({[name]: value});
+  };
+  submitLoginData = () => {
+    const {email, password} = this.state;
+    this.props.dispatch(sigInActionCreater({email, password}));
+  };
   render() {
+    if (this.props.Authentication.isLoading) {
+      return (
+        <ActivityIndicator
+          hidesWhenStopped={true}
+          size="large"
+          style={{
+            flex: 1,
+            alignItems: 'center',
+            backgroundColor: 'transparent',
+          }}
+        />
+      );
+    }
     return (
       <View style={{flex: 1}}>
         <View style={Styles.qrIcon}>
@@ -15,16 +46,19 @@ class SignIn extends React.Component {
             keyboardType="email-address"
             placeholder="email@example.com"
             textContentType="emailAddress"
+            onChangeText={text => this.onTextChangeHandler('email', text)}
           />
           <Input
             leftIcon={<Icon name="lock" type="material-community" />}
             secureTextEntry={true}
             placeholder="Password"
             textContentType="password"
+            onChangeText={text => this.onTextChangeHandler('password', text)}
           />
           <Button
             containerStyle={Styles.loginButton}
-            onPress={() => this.props.navigation.navigate('Home')}
+            // onPress={() => this.props.navigation.navigate('Home')}
+            onPress={this.submitLoginData}
             title="LOGIN"
           />
           <TouchableHighlight>
@@ -84,4 +118,7 @@ const Styles = StyleSheet.create({
   },
 });
 
-export default SignIn;
+const mapStateToProps = store => ({
+  Authentication: store.Authentication,
+});
+export default connect(mapStateToProps)(SignIn);
