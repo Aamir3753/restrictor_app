@@ -5616,6 +5616,11 @@ react-is@^16.12.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-i
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.0.tgz#0f37c3613c34fe6b37cd7f763a0d6293ab15c527"
   integrity sha512-GFMtL0vHkiBv9HluwNZTggSn/sCyEt9n02aM0dSAjGGyqyNlAyftYm4phPxdvCigG15JreC5biwxCgTAJZ7yAA==
 
+react-native-device-info@^5.6.1:
+  version "5.6.1"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-5.6.1.tgz#3ae88d8659b7b64d204dbfc39f69126b769363d4"
+  integrity sha512-FxjenoDZJKT53pp/Tl5gMsw5DA82Y5tOuySQlKS5AaDmw+Bu6EqEJjt0z4TRhJOVoqVJ35oCiZ3xViVbz/hB0w==
+
 react-native-elements@^1.2.7:
   version "1.2.7"
   resolved "https://registry.yarnpkg.com/react-native-elements/-/react-native-elements-1.2.7.tgz#1eca2db715c41722aeb67aea62bd2a4621adb134"
@@ -5657,6 +5662,11 @@ react-native-iphone-x-helper@^1.2.1:
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.2.1.tgz#645e2ffbbb49e80844bb4cbbe34a126fda1e6772"
   integrity sha512-/VbpIEp8tSNNHIvstuA3Swx610whci1Zpc9mqNkqn14DkMbw+ORviln2u0XyHG1kPvvwTNGZY6QpeFwxYaSdbQ==
 
+react-native-keychain@^6.1.1:
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-keychain/-/react-native-keychain-6.1.1.tgz#3c14e4df9e5599f8d5a708da75d27f9d2424d7c1"
+  integrity sha512-WYvAg7FbYPyX8jJ1rY/IQGS+6zK5LtNMRa3E8x1n0M5Lmsm/9CHtakzbmqT+rLvFE7DpPBg7qFawMuUoDjjtYA==
+
 react-native-maps@^0.27.1:
   version "0.27.1"
   resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-0.27.1.tgz#2f10cd417bb2fd938c9e015b1c9b6d9b1a44b97f"
@@ -5691,6 +5701,11 @@ react-native-status-bar-height@^2.2.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/react-native-status-bar-height/-/react-native-status-bar-height-2.4.0.tgz#de8cee4bb733a196167210d2d0bc1fa10acba3e3"
   integrity sha512-pWvZFlyIHiuxLugLioq97vXiaGSovFXEyxt76wQtbq0gxv4dGXMPqYow46UmpwOgeJpBhqL1E0EKxnfJRrFz5w==
+
+react-native-touch-id@^4.4.1:
+  version "4.4.1"
+  resolved "https://registry.yarnpkg.com/react-native-touch-id/-/react-native-touch-id-4.4.1.tgz#8b1bb2d04c30bac36bb9696d2d723e719c4a8b08"
+  integrity sha512-1jTl8fC+0fxvqegy/XXTyo6vMvPhjzkoDdaqoYZx0OH8AT250NuXnNPyKktvigIcys3+2acciqOeaCall7lrvg==
 
 react-native-vector-icons@^6.6.0:
   version "6.6.0"

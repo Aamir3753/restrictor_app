@@ -1,78 +1,87 @@
 import React from 'react';
-import {FlatList, View, ImageBackground} from 'react-native';
+import {FlatList, View, ImageBackground, ActivityIndicator} from 'react-native';
 import {ListItem} from 'react-native-elements';
+import axios from 'axios';
+import {baseUrl} from '../../Shared/constants';
+import {connect} from 'react-redux';
 
-const childs = [
-  {
-    name: 'Aamir',
-    image: '../../assets/image.png',
-  },
-  {
-    name: 'Aamir',
-    image: '../../assets/image.png',
-  },
-  {
-    name: 'Aamir',
-    image: '../../assets/image.png',
-  },
-  {
-    name: 'Aamir',
-    image: '../../assets/image.png',
-  },
-  {
-    name: 'Aamir',
-    image: '../../assets/image.png',
-  },
-  {
-    name: 'Aamir',
-    image: '../../assets/image.png',
-  },
-  {
-    name: 'Aamir',
-    image: '../../assets/image.png',
-  },
-  {
-    name: 'Aamir',
-    image: '../../assets/image.png',
-  },
-  {
-    name: 'Aamir',
-    image: '../../assets/image.png',
-  },
-  {
-    name: 'Aamir',
-    image: '../../assets/image.png',
-  },
-];
+class Childs extends React.Component {
+  state = {
+    childs: [],
+    isLoading: false,
+  };
+  getChildList = async () => {
+    this.setState({isLoading: true});
+    const url = `${baseUrl}api/v1/users/childs/getListOfChilds`;
+    const token = this.props.Authentication.user.token;
+    try {
+      const resp = await axios.get(url, {
+        headers: {
+          Authorization: 'bearer ' + token,
+        },
+      });
+      console.log(resp.data);
+      this.setState({isLoading: false, childs: resp.data.childs});
+    } catch (err) {
+      this.setState({isLoading: false});
+      if (err.response) {
+        alert(err.response.data.message);
+        return;
+      }
+      alert(err.message);
+    }
+  };
+  componentDidMount() {
+    this.props.navigation.addListener('focus', () => {
+      this.getChildList();
+    });
+  }
+  render() {
+    const {childs, isLoading} = this.state;
 
-const Childs = props => {
-  if (childs.length === 0) {
+    if (isLoading) {
+      return (
+        <View style={{justifyContent: 'center', flex: 1}}>
+          <ActivityIndicator size="large" />
+        </View>
+      );
+    }
+    if (childs.length === 0) {
+      return (
+        <ImageBackground
+          style={{width: '100%', height: '100%'}}
+          source={require('../../assets/empty-background.png')}
+        />
+      );
+    }
     return (
-      <ImageBackground
-        style={{width: '100%', height: '100%'}}
-        source={require('../../assets/empty-background.png')}
-      />
+      <View>
+        <FlatList
+          data={childs}
+          renderItem={({item}) => {
+            return (
+              <ListItem
+                title={item.name}
+                leftAvatar={{
+                  source:
+                    item.avatar !== ''
+                      ? item.avatar
+                      : require('../../assets/image.png'),
+                }}
+                chevron
+                bottomDivider
+                onPress={() => this.props.navigation.navigate('ChildDetails')}
+              />
+            );
+          }}
+          keyExtractor={item => item._id}
+        />
+      </View>
     );
   }
-  return (
-    <View>
-      <FlatList
-        data={childs}
-        renderItem={({item}) => {
-          return (
-            <ListItem
-              title={item.name}
-              leftAvatar={{source: require('../../assets/image.png')}}
-              chevron
-              bottomDivider
-              onPress={() => props.navigation.navigate('ChildDetails')}
-            />
-          );
-        }}
-        keyExtractor={(item, index) => index.toString()}
-      />
-    </View>
-  );
-};
+}
 
-export default Childs;
+const mapStateToProps = store => ({
+  Authentication: store.Authentication,
+});
+export default connect(mapStateToProps)(Childs);

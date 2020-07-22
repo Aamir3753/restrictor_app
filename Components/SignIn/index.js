@@ -4,10 +4,17 @@ import {
   View,
   TouchableHighlight,
   ActivityIndicator,
+  ToastAndroid,
 } from 'react-native';
+import * as Keychain from 'react-native-keychain';
+import DeviceInfo from 'react-native-device-info';
 import {Input, Button, Icon, Text} from 'react-native-elements';
 import {connect} from 'react-redux';
+import TouchID from 'react-native-touch-id';
+
 import {logIn as sigInActionCreater} from '../../Redux/ActionCreaters/authentication';
+
+const server = DeviceInfo.getBundleId();
 
 class SignIn extends React.Component {
   state = {
@@ -17,9 +24,42 @@ class SignIn extends React.Component {
   onTextChangeHandler = (name, value) => {
     this.setState({[name]: value});
   };
-  submitLoginData = () => {
-    const {email, password} = this.state;
-    this.props.dispatch(sigInActionCreater({email, password}));
+  submitLoginData = async () => {
+    try {
+      const {email, password} = this.state;
+      this.props.dispatch(sigInActionCreater({email, password}));
+      await Keychain.setInternetCredentials(server, email, password);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  getCreds = async () => {
+    const credentials = await Keychain.getInternetCredentials(server);
+    if (credentials) {
+      return credentials;
+    } else {
+      const err = new Error('SignIn first time with Email and Password');
+      throw err;
+    }
+  };
+  pressHandler = () => {
+    const optionalConfigObject = {
+      title: 'Authenticate',
+      color: '#e00606',
+    };
+    TouchID.authenticate('Scan Fingerprint to Signin', optionalConfigObject)
+      .then(async () => {
+        try {
+          const creds = await this.getCreds();
+          const {username, password} = creds;
+          this.props.dispatch(sigInActionCreater({email: username, password}));
+        } catch (err) {
+          ToastAndroid.show(err.message, ToastAndroid.LONG);
+        }
+      })
+      .catch(() => {
+        ToastAndroid.show('Authentication Failed', ToastAndroid.BOTTOM);
+      });
   };
   render() {
     if (this.props.Authentication.isLoading) {
@@ -57,11 +97,10 @@ class SignIn extends React.Component {
           />
           <Button
             containerStyle={Styles.loginButton}
-            // onPress={() => this.props.navigation.navigate('Home')}
             onPress={this.submitLoginData}
             title="LOGIN"
           />
-          <TouchableHighlight>
+          <TouchableHighlight onPress={this.pressHandler}>
             <View style={Styles.loginWithtouchId}>
               <Icon name="fingerprint" size={24} type="material-community" />
               <Text style={{fontSize: 14}}>LOGIN WITH TOUCHID</Text>
