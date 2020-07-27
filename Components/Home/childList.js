@@ -70,7 +70,9 @@ class Childs extends React.Component {
                 }}
                 chevron
                 bottomDivider
-                onPress={() => this.props.navigation.navigate('ChildDetails')}
+                onPress={() =>
+                  this.props.navigation.navigate('ChildDetails', {child: item})
+                }
               />
             );
           }}

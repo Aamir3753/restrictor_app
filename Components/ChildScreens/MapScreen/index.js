@@ -1,22 +1,26 @@
 import React from 'react';
-import {Dimensions, View, Text, TouchableHighlight} from 'react-native';
+import {Dimensions, View, Text} from 'react-native';
 import MapView, {Marker, Polygon} from 'react-native-maps';
-import QrModal from './QrCodeModal';
-class ChildDetails extends React.Component {
+class ChildScreen extends React.Component {
   state = {
-    isModalOpen: false,
+    child: null,
   };
-  openModal = () => this.setState({isModalOpen: true});
-  closeModal = () => this.setState({isModalOpen: false});
   mapPolygon = () => {
-    const {child} = this.props.route.params;
+    const {child} = this.state;
     return child.location.polygon.coordinates[0].map(points => ({
       latitude: points[1],
       longitude: points[0],
     }));
   };
   render() {
-    const {child} = this.props.route.params;
+    const {child} = this.state;
+    if (!child) {
+      return (
+        <View>
+          <Text>Loading...</Text>
+        </View>
+      );
+    }
     return (
       <View style={{flex: 1}}>
         <View
@@ -31,9 +35,7 @@ class ChildDetails extends React.Component {
               flexDirection: 'row',
               alignItems: 'center',
             }}>
-            <TouchableHighlight onPress={this.openModal}>
-              <Text style={{fontSize: 30}}>{child.name}</Text>
-            </TouchableHighlight>
+            <Text style={{fontSize: 30}}>{child.name}</Text>
 
             <View
               style={{
@@ -55,11 +57,6 @@ class ChildDetails extends React.Component {
           style={{
             width: Dimensions.get('window').width,
             flex: 1,
-          }}
-          initialRegion={{
-            ...this.mapPolygon()[0],
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
           }}>
           <Polygon coordinates={this.mapPolygon()} />
 
@@ -72,13 +69,8 @@ class ChildDetails extends React.Component {
             />
           )}
         </MapView>
-        <QrModal
-          isOpen={this.state.isModalOpen}
-          closeModal={this.closeModal}
-          childId={child.shortId}
-        />
       </View>
     );
   }
 }
-export default ChildDetails;
+export default ChildScreen;

@@ -78,7 +78,12 @@ class SignIn extends React.Component {
     return (
       <View style={{flex: 1}}>
         <View style={Styles.qrIcon}>
-          <Icon name="qrcode-scan" size={30} type="material-community" />
+          <Icon
+            onPress={()=>this.props.navigation.navigate('QrScanner')}
+            name="qrcode-scan"
+            size={30}
+            type="material-community"
+          />
         </View>
         <View style={Styles.MainContainer}>
           <Input

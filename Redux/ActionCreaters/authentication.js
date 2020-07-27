@@ -53,6 +53,10 @@ export const signUp = ({
   }
 };
 
+export const childAuthentication = () => dispatch => {
+  dispatch(authenticationSuccessful({isChild: true}));
+};
+
 const authenticationLoading = () => ({type: AUTHENTICATING});
 const authenticationFailed = () => ({type: UNAUTHENTICATED});
 const authenticationSuccessful = user => ({type: AUTHENTICATED, user});

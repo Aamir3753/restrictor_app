@@ -6,12 +6,14 @@ import Home from './Home';
 import AddChild from './AddChild';
 import ChildDetails from './ChildDetails';
 import SignUp from './SignUp';
-
+import QrScanner from './ChildScreens/QrCodeScanner';
+import ChildMap from './ChildScreens/MapScreen';
 const {Screen, Navigator} = createStackNavigator();
 
 const Screens = props => {
   const {Authentication} = props;
-  if (Authentication.isAuthenticated) {
+  console.log('testing', Authentication);
+  if (Authentication.isAuthenticated && !Authentication.user.isChild) {
     return (
       <Navigator initialRouteName="Home">
         <Screen
@@ -34,6 +36,16 @@ const Screens = props => {
         />
       </Navigator>
     );
+  } else if (Authentication.isAuthenticated && Authentication.user.isChild) {
+    return (
+      <Navigator initialRouteName="ChildMap">
+        <Screen
+          name="ChildMap"
+          options={{headerShown: false}}
+          component={ChildMap}
+        />
+      </Navigator>
+    );
   } else {
     return (
       <Navigator initialRouteName="SignIn">
@@ -46,6 +58,11 @@ const Screens = props => {
           name="SignUp"
           options={{headerTitle: 'Create Account'}}
           component={SignUp}
+        />
+        <Screen
+          options={{headerShown: false}}
+          name="QrScanner"
+          component={QrScanner}
         />
       </Navigator>
     );
