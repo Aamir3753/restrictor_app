@@ -2,21 +2,40 @@ import React from 'react';
 import {Dimensions, View, Text, TouchableHighlight} from 'react-native';
 import MapView, {Marker, Polygon} from 'react-native-maps';
 import QrModal from './QrCodeModal';
+import connectSocket, {locationUpdate} from '../../socket.io';
 class ChildDetails extends React.Component {
   state = {
     isModalOpen: false,
+    child: null,
   };
   openModal = () => this.setState({isModalOpen: true});
   closeModal = () => this.setState({isModalOpen: false});
   mapPolygon = () => {
-    const {child} = this.props.route.params;
+    let {child} = this.state;
+    if (!child) {
+      child = this.props.route.params.child;
+    }
     return child.location.polygon.coordinates[0].map(points => ({
       latitude: points[1],
       longitude: points[0],
     }));
   };
-  render() {
+  componentDidMount() {
+    this.props.navigation.addListener('focus', () => {});
+    connectSocket();
     const {child} = this.props.route.params;
+    console.log('child id', child.shortId);
+    locationUpdate(
+      child.shortId,
+      child => console.log('location update') || this.setState({child}),
+    );
+  }
+  render() {
+    let {child} = this.state;
+    console.log('updated child', child);
+    if (!child) {
+      child = this.props.route.params.child;
+    }
     return (
       <View style={{flex: 1}}>
         <View
@@ -39,10 +58,7 @@ class ChildDetails extends React.Component {
               style={{
                 width: 20,
                 height: 20,
-                backgroundColor:
-                  child.authorized && child.location.active
-                    ? '#7ddd71'
-                    : '#909090',
+                backgroundColor: child.authorized ? '#7ddd71' : '#909090',
                 borderRadius: 20,
                 marginBottom: 15,
                 marginLeft: 3,
@@ -65,7 +81,8 @@ class ChildDetails extends React.Component {
 
           {child.location.currentLocation.coordinates.length !== 0 && (
             <Marker
-              coordinates={{
+
+              coordinate={{
                 longitude: child.location.currentLocation.coordinates[0],
                 latitude: child.location.currentLocation.coordinates[1],
               }}

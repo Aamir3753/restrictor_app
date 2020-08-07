@@ -12,7 +12,6 @@ const {Screen, Navigator} = createStackNavigator();
 
 const Screens = props => {
   const {Authentication} = props;
-  console.log('testing', Authentication);
   if (Authentication.isAuthenticated && !Authentication.user.isChild) {
     return (
       <Navigator initialRouteName="Home">

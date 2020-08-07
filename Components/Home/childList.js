@@ -20,7 +20,6 @@ class Childs extends React.Component {
           Authorization: 'bearer ' + token,
         },
       });
-      console.log(resp.data);
       this.setState({isLoading: false, childs: resp.data.childs});
     } catch (err) {
       this.setState({isLoading: false});
