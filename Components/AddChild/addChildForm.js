@@ -45,7 +45,7 @@ class AddChidForm extends React.Component {
       <View>
         <View style={{alignItems: 'center', marginTop: 3}}>
           <Avatar
-            icon={{name: 'user'}}
+            icon={{name: 'user',type:"antdesign"}}
             imageProps={{source: this.state.avatarSource}}
             onEditPress={this.showImagePicker}
             rounded

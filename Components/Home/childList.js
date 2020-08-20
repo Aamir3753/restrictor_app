@@ -58,6 +58,7 @@ class Childs extends React.Component {
         <FlatList
           data={childs}
           renderItem={({item}) => {
+            console.log(item.avatar);
             return (
               <ListItem
                 title={item.name}

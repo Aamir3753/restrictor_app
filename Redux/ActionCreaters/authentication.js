@@ -1,4 +1,9 @@
-import {AUTHENTICATED, AUTHENTICATING, UNAUTHENTICATED} from '../actionTypes';
+import {
+  AUTHENTICATED,
+  AUTHENTICATING,
+  UNAUTHENTICATED,
+  LOGOUT,
+} from '../actionTypes';
 import axios from 'axios';
 import {baseUrl} from '../../Shared/constants';
 
@@ -57,6 +62,11 @@ export const childAuthentication = () => dispatch => {
   dispatch(authenticationSuccessful({isChild: true}));
 };
 
+export const logoutActionCreater = () => dispatch => {
+  dispatch(logOut());
+};
+
 const authenticationLoading = () => ({type: AUTHENTICATING});
 const authenticationFailed = () => ({type: UNAUTHENTICATED});
 const authenticationSuccessful = user => ({type: AUTHENTICATED, user});
+const logOut = () => ({type: LOGOUT});

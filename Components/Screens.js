@@ -8,10 +8,16 @@ import ChildDetails from './ChildDetails';
 import SignUp from './SignUp';
 import QrScanner from './ChildScreens/QrCodeScanner';
 import ChildMap from './ChildScreens/MapScreen';
+import {Icon} from 'react-native-elements';
+import {View} from 'react-native';
+import {logoutActionCreater} from '../Redux/ActionCreaters/authentication';
 const {Screen, Navigator} = createStackNavigator();
 
 const Screens = props => {
-  const {Authentication} = props;
+  const {Authentication, dispatch} = props;
+  const logoutHandler = () => {
+    dispatch(logoutActionCreater());
+  };
   if (Authentication.isAuthenticated && !Authentication.user.isChild) {
     return (
       <Navigator initialRouteName="Home">
@@ -20,6 +26,11 @@ const Screens = props => {
           options={{
             headerLeft: () => null,
             headerTitle: 'My List',
+            headerRight: () => (
+              <View style={{marginRight: 10}}>
+                <Icon onPress={logoutHandler} name="logout" type="antdesign" />
+              </View>
+            ),
           }}
           component={Home}
         />

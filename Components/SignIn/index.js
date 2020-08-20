@@ -18,8 +18,8 @@ const server = DeviceInfo.getBundleId();
 
 class SignIn extends React.Component {
   state = {
-    email: '',
-    password: '',
+    email: 'test@test.com',
+    password: '123456789',
   };
   onTextChangeHandler = (name, value) => {
     this.setState({[name]: value});

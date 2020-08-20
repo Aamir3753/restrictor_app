@@ -1,4 +1,9 @@
-import {AUTHENTICATED, UNAUTHENTICATED, AUTHENTICATING} from '../actionTypes';
+import {
+  AUTHENTICATED,
+  UNAUTHENTICATED,
+  AUTHENTICATING,
+  LOGOUT,
+} from '../actionTypes';
 
 export default (
   state = {
@@ -23,6 +28,8 @@ export default (
         user: null,
         isAuthenticated: false,
       };
+    case LOGOUT:
+      return {isLoading: false, user: null, isAuthenticated: false};
     default:
       return state;
   }

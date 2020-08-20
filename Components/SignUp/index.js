@@ -52,14 +52,14 @@ class SignUp extends React.Component {
           <Input
             autoFocus={true}
             onChangeText={text => this.inputHandler('firstName', text)}
-            leftIcon={<Icon name="user" type="material-community" />}
-            placeholder="Aamir"
+            leftIcon={<Icon name="user" type="antdesign" />}
+            placeholder="Jhon"
           />
           <Input
             autoFocus={true}
             onChangeText={text => this.inputHandler('lastName', text)}
-            leftIcon={<Icon name="user" type="material-community" />}
-            placeholder="Shabir"
+            leftIcon={<Icon name="user" type="antdesign" />}
+            placeholder="Doe"
           />
           <Input
             onChangeText={text => this.inputHandler('email', text)}
